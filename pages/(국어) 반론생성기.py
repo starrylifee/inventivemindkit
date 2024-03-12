@@ -50,7 +50,7 @@ def try_generate_content(api_key, prompt_parts):
         return None
 
 # 스트림릿 앱 인터페이스 구성
-st.title("학생 미술 작품 반론 생성기")
+st.title("주장과 근거에 따른 반론 생성기")
 
 # 사용자 입력 받기
 claim = st.text_input("주장을 입력하세요")
