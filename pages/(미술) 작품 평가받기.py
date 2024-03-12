@@ -36,7 +36,7 @@ def try_generate_content(api_key, image):
         return None
 
 # 핸드폰 사진 업로드 기능 추가
-uploaded_file = st.file_uploader("핸드폰 사진 업로드")
+uploaded_file = st.file_uploader("핸드폰으로 학생이 그린 미술 작품을 가로로 찍어주세요.")
 
 # 이미지가 업로드되었는지 확인git init
 
