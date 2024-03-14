@@ -28,6 +28,33 @@ openai_api_key = st.sidebar.text_input("OpenAI API 키를 입력하세요.", typ
 # OpenAI 클라이언트 초기화
 client = OpenAI(api_key=openai_api_key)
 
+# generativeai 함수 설정
+def try_generate_text_content(api_key, prompt_parts):
+    # API 키를 설정
+    genai.configure(api_key=api_key)
+    
+    # 설정된 모델 변경
+    model = genai.GenerativeModel(model_name="gemini-1.0-pro",
+                                  generation_config={
+                                      "temperature": 0.9,
+                                      "top_p": 1,
+                                      "top_k": 1,
+                                      "max_output_tokens": 1024,
+                                  },
+                                  safety_settings=[
+                                      {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+                                      {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+                                      {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+                                      {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+                                  ])
+    try:
+        # 콘텐츠 생성 시도
+        response = model.generate_content(prompt_parts)
+        return response.text
+    except Exception as e:
+        # 예외 발생시 None 반환
+        print(f"API 호출 실패: {e}")
+        return None
 
 def try_generate_content(api_key, image):
     # API 키를 설정
@@ -67,25 +94,45 @@ if uploaded_file is not None:
     if response is not None:
         # 결과 표시
         st.image(img)  # 업로드된 사진 출력
-        generated_text = response.text  # response.text를 변수에 저장
+
+        initial_image_analysis_text = response.text  # response.text를 변수에 저장
         st.markdown(response.text)
 
-        # 이미지 생성 버튼
+        # 이미지 생성 버튼 클릭 시 실행되는 코드 블록
         if st.button("이미지 생성"):
             try:
-                # DALL·E를 사용하여 이미지 생성 요청
-                image_response = client.images.generate(
-                    model="dall-e-3",
-                    prompt=generated_text,  # 분석된 텍스트를 프롬프트로 사용
-                    size="1024x1024",
-                    quality="standard",
-                    n=1,
-                )
-                # 생성된 이미지 URL 추출 및 표시
-                generated_image_url = image_response.data[0].url
-                st.image(generated_image_url, caption="Generated Image")
+                # 생물이 살았던 일상을 묘사하는 새로운 프롬프트 생성
+                new_prompt = f"다음 정보를 바탕으로, 이 생물이 살았던 일상적인 모습을 상상하고 묘사해주세요: {initial_image_analysis_text}"
+                
+                # 새로운 프롬프트를 사용하여 텍스트 생성
+                response_text = try_generate_text_content(gemini_api_key1, [new_prompt])
+                
+                # 첫 번째 API 키 실패 시, 두 번째 API 키로 재시도
+                if response_text is None and gemini_api_key2 is not None:
+                    print("첫 번째 API 호출에 실패하여 두 번째 API 키로 재시도합니다.")
+                    response_text = try_generate_text_content(gemini_api_key2, [new_prompt])
+                
+                # 생성된 텍스트를 기반으로 이미지 생성
+                if response_text is not None:
+                    generated_living_scene_text = response_text
+
+                    # DALL·E를 사용하여 이미지 생성 요청
+                    image_response = client.images.generate(
+                        model="dall-e-3",
+                        prompt=generated_living_scene_text,
+                        size="1024x1024",
+                        quality="standard",
+                        n=1,
+                    )
+                    # 생성된 이미지 URL 추출 및 표시
+                    generated_image_url = image_response.data[0].url
+                    st.image(generated_image_url, caption="Generated Image")
+                    st.markdown(to_markdown(generated_living_scene_text))
+                else:
+                    st.error("텍스트 생성에 실패했습니다. API 호출에 문제가 있습니다.")
             except Exception as e:
                 st.error(f"이미지 생성 중 오류가 발생했습니다: {e}")
+
     else:
         st.markdown("API 호출에 실패했습니다. 나중에 다시 시도해주세요.")
     
