@@ -50,7 +50,8 @@ def try_generate_content(api_key, prompt_parts):
         return None
 
 # 스트림릿 앱 인터페이스 구성 수정
-st.title("식물씨앗이 이동하는 방법 반영한 \n발명아이디어 생성기")
+st.title("식물씨앗이 이동하는 방법 반영한")
+st.title("발명아이디어 생성기")
 
 # 사용자 입력 받기
 item_name = st.text_input("물건의 이름을 입력하세요")
