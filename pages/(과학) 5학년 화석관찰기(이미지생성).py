@@ -35,7 +35,7 @@ def try_generate_content(api_key, image):
     model = genai.GenerativeModel('gemini-pro-vision')
     try:
         # 콘텐츠 생성 시도
-        response = model.generate_content(["이 사진은 화석표본입니다. 화석의 이름을 말해주고, 현재 존재한 동물중 유사한 생김새를 가진 동물을 말해주세요. 해당 생물이 살았던던 환경도 묘사해주세요.", image])
+        response = model.generate_content(["이 사진은 화석표본입니다. 화석의 이름을 말해주고, 화석 생물이 살았던 모습도 자세히 묘사해주세요.", image])
         response.resolve()
         return response
     except Exception as e:
