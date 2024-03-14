@@ -115,7 +115,7 @@ if uploaded_file is not None:
                 # 생성된 텍스트를 기반으로 이미지 생성
                 if response_text is not None:
                     generated_living_scene_text = response_text
-                    st.markdown(to_markdown(generated_living_scene_text))
+                    #st.markdown(to_markdown(generated_living_scene_text))   숨기기
 
                     # DALL·E를 사용하여 이미지 생성 요청
                     image_response = client.images.generate(
