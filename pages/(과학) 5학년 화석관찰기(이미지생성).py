@@ -22,8 +22,18 @@ with open(secrets_path, "r") as f:
 gemini_api_key1 = secrets.get("gemini_api_key1")
 gemini_api_key2 = secrets.get("gemini_api_key2")
 
+st.sidebar.markdown("""
+    ## OpenAI API 키 입력
+    아래에 OpenAI API 키를 입력하세요. 입력된 키는 안전하게 저장되며,
+    이미지를 생성되는 데 사용됩니다.
+""")
+
 # OpenAI API 키 입력을 위한 사이드바 설정
 openai_api_key = st.sidebar.text_input("OpenAI API 키를 입력하세요.", type="password")
+
+st.sidebar.markdown("""
+    ## API는 이미지생성 제한이 있으므로, 교사가 사용하는 것을 추천드립니다.
+""")
 
 # OpenAI 클라이언트 초기화
 client = OpenAI(api_key=openai_api_key)
