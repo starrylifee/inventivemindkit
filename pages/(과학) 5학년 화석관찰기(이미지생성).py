@@ -115,6 +115,7 @@ if uploaded_file is not None:
                 # 생성된 텍스트를 기반으로 이미지 생성
                 if response_text is not None:
                     generated_living_scene_text = response_text
+                    st.markdown(to_markdown(generated_living_scene_text))
 
                     # DALL·E를 사용하여 이미지 생성 요청
                     image_response = client.images.generate(
@@ -127,7 +128,7 @@ if uploaded_file is not None:
                     # 생성된 이미지 URL 추출 및 표시
                     generated_image_url = image_response.data[0].url
                     st.image(generated_image_url, caption="Generated Image")
-                    st.markdown(to_markdown(generated_living_scene_text))
+                
                 else:
                     st.error("텍스트 생성에 실패했습니다. API 호출에 문제가 있습니다.")
             except Exception as e:
