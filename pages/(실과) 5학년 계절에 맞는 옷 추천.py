@@ -4,7 +4,7 @@ import requests
 from openai import OpenAI
 
 # OpenWeatherMap API 키 설정
-API_KEY = "79ee6b1a97442180efa505de6c43cee2"  # API 키를 입력하세요
+API_KEY = st.secrets["openweathermap"]["api_key"]
 OPENAI_API_KEY = st.sidebar.text_input("OpenAI API 키를 입력하세요.", type="password")
 
 st.sidebar.markdown("""
