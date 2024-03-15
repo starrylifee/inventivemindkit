@@ -67,7 +67,7 @@ else:
 uploaded_file = st.file_uploader("옷 목록 엑셀 파일을 업로드하세요.", type=["xlsx"])
 
 # 샘플 파일 다운로드 링크 추가
-sample_file_url = "https://github.com/your_username/your_repository/blob/main/data/sample_clothes_100items.xlsx?raw=true"
+sample_file_url = "https://github.com/starrylifee/indischool/blob/main/data/sample_clothes_100items.xlsx?raw=true"
 st.markdown(f"샘플 파일로 연습해보고, 샘플처럼 자신의 옷을 정리해서 넣어보세요. [샘플 파일 다운로드]({sample_file_url})", unsafe_allow_html=True)
 
 if uploaded_file is not None and temperature is not None:
