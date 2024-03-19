@@ -3,8 +3,6 @@ import textwrap
 import google.generativeai as genai
 import streamlit as st
 import toml
-from PIL import Image
-import io
 
 def to_markdown(text):
     text = text.replace('•', '*')
@@ -32,7 +30,7 @@ def try_generate_content(api_key, prompt_parts):
                                       "temperature": 0.9,
                                       "top_p": 1,
                                       "top_k": 1,
-                                      "max_output_tokens": 1024,
+                                      "max_output_tokens": 2048,
                                   },
                                   safety_settings=[
                                       {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
@@ -50,23 +48,21 @@ def try_generate_content(api_key, prompt_parts):
         return None
 
 # 스트림릿 앱 인터페이스 구성 수정
-st.title("식물씨앗이 이동하는 방법 반영한")
-st.title("발명아이디어 생성기")
+st.title("우리 주변의 불편한 점 찾기")
 
 # 사용자 입력 받기
 item_name = st.text_input("물건의 이름을 입력하세요")
 
-# 드롭다운을 이용한 씨앗 이동 방법 선택
-seed_movement_method = st.selectbox(
-    "식물의 씨앗이 이동하는 방법을 선택해주세요.",
-    ["동물의 몸에 붙어 움직이기", "바람을 타고 날아가기", "수분에 의한 이동", "발사 메커니즘", "동물의 소화 후 배설"]
-)
-
-if st.button("아이디어 생성"):
-    
+if st.button("불편한 점 출력"):
     # few-shot 프롬프트 구성
     prompt_parts = [
-        f"식물의 씨앗이 이동하는 방법은 크게 5가지가 있습니다.\n\n1. 동물의 몸에 붙어 움직이기\n2. 바람을 타고 날아가기\n3. 수분에 의한 이동\n4. 발사 메커니즘\n5. 동물의 소화 후 배설\n\n{seed_movement_method}를 이용해서 {item_name}의 기능을 개량할 수 있는 아이디어를 주세요.",
+        "아래는 초등학생이 생성한 물건별 불편했던 3가지 경험입니다.\ninput은 물건의 이름입니다.\noutput은 불편했던 경험입니다.\n\n물건의 이름을 확인하고 불편했던 경험 3가지를 출력해주세요.",
+        "input: 스마트워치",
+        "output: 자주 충전해야 하는 불편함이 있다. 화면이 작아 세부 정보 확인이 어렵다. 방수 기능이 부족해 수영 등의 활동에 제한적이다.",
+        "input: 전자레인지",
+        "output: 음식을 고르게 데우지 못하는 경우가 있다. 내부 청소가 번거롭다. 전자파에 대한 건강 우려가 있다.",
+        f"input: {item_name}",
+        "output: ",
     ]
 
     # 첫 번째 API 키로 시도
