@@ -15,7 +15,7 @@ with open(secrets_path, "r") as f:
 gemini_api_key3 = secrets.get("gemini_api_key3")
 gemini_api_key4 = secrets.get("gemini_api_key4")
 
-# few-shot 프롬프트 구성 함수 수정
+# 프롬프트 구성 함수 수정
 def try_generate_content(api_key, prompt_parts):
     # API 키를 설정
     genai.configure(api_key=api_key)
