@@ -51,7 +51,7 @@ age_range = st.slider("타겟 연령대", 0, 100, (20, 50))
 interests = st.multiselect("관심사", ["기술", "체육", "음악", "여행", "운동", "게임", "요리", "예술", "과학"])
 
 # 문제 상황 생성 버튼
-if st.button("인공지능아 제작 조언을 부탁해"):
+if st.button("인공지능아 마케팅 조언을 부탁해"):
     # 프롬프트 구성
     prompt_parts = f"제품 이름: {product_name}\n제품 설명: {product_description}\n타겟 국가: {country}\n타겟 연령대: {age_range}\n관심사: {', '.join(interests)}\n\n위 정보를 기반으로 시장 분석과 마케팅 전략을 제안해주세요."
 
