@@ -22,7 +22,7 @@ def try_generate_content(api_key, prompt_parts):
                                       "temperature": 0.9,
                                       "top_p": 1,
                                       "top_k": 1,
-                                      "max_output_tokens": 1024,
+                                      "max_output_tokens": 2048,
                                   },
                                   safety_settings=[
                                       {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
