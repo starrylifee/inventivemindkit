@@ -100,12 +100,7 @@ item_to_improve = st.text_input("개선하고 싶은 물건을 입력하세요:"
 # 사용자가 스스로 기법을 선택할 것인지, AI 추천을 받을 것인지 선택
 choice = st.radio("TRIZ 기법 선택 방법:", ["내가 스스로 발명기법 고르기", "인공지능의 추천 받아보기"])
 
-
-# 사용자가 TRIZ 기법을 선택할 수 있도록 체크박스 목록 생성
-selected_techniques = []
-
 if choice == "내가 스스로 발명기법 고르기":
-    # TRIZ 기법 선택 섹션
     st.write("아래에서 마음에 드는 TRIZ 기법을 최대 2개까지 선택하세요:")
 
     # 컬럼 레이아웃 생성
@@ -115,33 +110,40 @@ if choice == "내가 스스로 발명기법 고르기":
     half = len(triz_techniques) // 2
     triz_techniques_items = list(triz_techniques.items())
 
+    # 체크박스 선택 상태를 관리하는 함수
+    def manage_selection(technique, key_suffix):
+        with st.spinner("처리 중..."):
+            # 선택 상태가 변경되었는지 확인
+            current_selection = st.checkbox(technique, key=technique + key_suffix, value=technique in st.session_state['selected_techniques'])
+
+            # 선택된 경우, 선택 목록에 추가
+            if current_selection and technique not in st.session_state['selected_techniques']:
+                if len(st.session_state['selected_techniques']) < 2:
+                    st.session_state['selected_techniques'].append(technique)
+                else:
+                    st.warning("최대 2개까지만 선택할 수 있습니다.")
+                    st.checkbox(technique, key=technique + key_suffix, value=False)  # 초과 선택 시 체크박스를 다시 해제
+            elif not current_selection and technique in st.session_state['selected_techniques']:
+                # 선택이 취소된 경우, 선택 목록에서 제거
+                st.session_state['selected_techniques'].remove(technique)
+
     # 첫 번째 컬럼에 첫 번째 절반의 체크박스 배치
     with col1:
-        for technique, description in triz_techniques_items[:half]:
-            if st.checkbox(technique, key=technique + "1"):  # 고유한 key를 위해 접미사 추가
-                if technique not in st.session_state['selected_techniques']:
-                    if len(st.session_state['selected_techniques']) < 2:
-                        st.session_state['selected_techniques'].append(technique)
-                        st.caption(description)  # 선택한 기법의 설명을 작게 표시
-                    else:
-                        st.warning("최대 2개까지만 선택할 수 있습니다.", key=technique + "warn1")
+        for technique, _ in triz_techniques_items[:half]:
+            manage_selection(technique, "1")
 
     # 두 번째 컬럼에 나머지 체크박스 배치
     with col2:
-        for technique, description in triz_techniques_items[half:]:
-            if st.checkbox(technique, key=technique + "2"):  # 고유한 key를 위해 접미사 추가
-                if technique not in st.session_state['selected_techniques']:
-                    if len(st.session_state['selected_techniques']) < 2:
-                        st.session_state['selected_techniques'].append(technique)
-                        st.caption(description)  # 선택한 기법의 설명을 작게 표시
-                    else:
-                        st.warning("최대 2개까지만 선택할 수 있습니다.")
+        for technique, _ in triz_techniques_items[half:]:
+            manage_selection(technique, "2")
+
 
     # 선택된 기법 표시
     if st.session_state['selected_techniques']:
         st.write("선택된 기법:")
         for selected_technique in st.session_state['selected_techniques']:
             st.write(f"- {selected_technique}")
+
 
     # 사용자의 개선 아이디어 입력 받기
     improvement_idea = st.text_area("나의 개선 아이디어를 입력하세요:")
@@ -151,7 +153,7 @@ if choice == "내가 스스로 발명기법 고르기":
         if item_to_improve and improvement_idea and st.session_state['selected_techniques']:
             # 프롬프트 구성
             prompt_parts = [
-                f"{item_to_improve}를 발명기법을 이용하려 개선하려 합니다. {triz_techniques}에 있는40가지의 발명 기법 중에 {selected_techniques}을 선택하여 {improvement_idea}를 생각해냈습니다. 아이디어에 대한 평가와 칭찬을 해주세요.",
+                f"{item_to_improve}를 발명기법을 이용하려 개선하려 합니다. {triz_techniques}에 있는40가지의 발명 기법 중에 {selected_technique}을 선택하여 {improvement_idea}를 생각해냈습니다. 아이디어에 대한 평가와 칭찬을 해주세요.",
             ]
 
             # 첫 번째 API 키로 시도
