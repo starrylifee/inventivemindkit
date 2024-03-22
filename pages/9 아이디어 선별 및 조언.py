@@ -56,4 +56,8 @@ if st.button("인공지능아 문제상황 생성해줘"):
 
     # 생성된 문제 상황 표시
     if response_text:
-        st.session_state.problem_statement
+        st.session_state.problem_statement = response_text  # 생성된 텍스트를 세션 상태에 저장
+        st.write(st.session_state.problem_statement)  # 저장된 텍스트를 화면에 출력
+    else:
+        st.error("문제 상황 생성에 실패했습니다. 나중에 다시 시도해주세요.")
+
