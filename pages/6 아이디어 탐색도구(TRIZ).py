@@ -92,6 +92,8 @@ def to_markdown(text):
     text = text.replace('•', '*')
     return textwrap.indent(text, '> ', predicate=lambda _: True)
 
+st.title('아이디어 탐색도구 (TRIZ)')
+
 # 사용자 입력
 item_to_improve = st.text_input("개선하고 싶은 물건을 입력하세요:")
 
@@ -147,7 +149,6 @@ if choice == "내가 스스로 발명기법 고르기":
     # 인공지능 평가 버튼
     if st.button("인공지능 평가"):
         if item_to_improve and improvement_idea and st.session_state['selected_techniques']:
-        # 프롬프트 구성
             # 프롬프트 구성
             prompt_parts = [
                 f"{item_to_improve}를 발명기법을 이용하려 개선하려 합니다. {triz_techniques}에 있는40가지의 발명 기법 중에 {selected_techniques}을 선택하여 {improvement_idea}를 생각해냈습니다. 아이디어에 대한 평가와 칭찬을 해주세요.",
