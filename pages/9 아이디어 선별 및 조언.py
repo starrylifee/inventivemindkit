@@ -2,7 +2,6 @@ import streamlit as st
 import pathlib
 import google.generativeai as genai
 import toml
-import textwrap
 
 # 현재 파일의 위치를 기반으로 secrets.toml 파일의 경로를 설정
 secrets_path = pathlib.Path(__file__).parent.parent / ".streamlit/secrets.toml"
