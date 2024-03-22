@@ -48,7 +48,7 @@ product_description = st.text_area("제품 설명")
 # 타겟 시장 세부 정보 입력 받기
 country = st.selectbox("타겟 국가", ["국가 선택", "한국", "미국", "일본", "중국", "유럽"])
 age_range = st.slider("타겟 연령대", 0, 100, (20, 50))
-interests = st.multiselect("관심사", ["기술", "음악", "여행", "운동", "게임", "요리", "예술", "과학"])
+interests = st.multiselect("관심사", ["기술", "체육", "음악", "여행", "운동", "게임", "요리", "예술", "과학"])
 
 # 문제 상황 생성 버튼
 if st.button("인공지능아 제작 조언을 부탁해"):
