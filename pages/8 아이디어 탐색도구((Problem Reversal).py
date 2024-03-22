@@ -66,6 +66,9 @@ if 'initialized' not in st.session_state:
     reset_session()
     st.session_state.initialized = True  # 세션 상태가 초기화되었음을 표시
 
+st.title('아이디어 탐색도구 (Problem Reversal)')
+
+
 # 입력 및 선택 구성 요소
 change_target = st.text_input("1. 무엇을 바꾸고 싶은가요? (예: 생산성, 고객 유치량, 배터리수명, 자동차 연비, 컴퓨터 속도 등)", key='change_target')
 change_method = st.text_input("2. 어떻게 바꾸고 싶은가요? (향상, 늘리기, 줄이기, 빠르게 하기)", key='change_method')

@@ -37,6 +37,8 @@ def try_generate_content(api_key, prompt_parts):
         st.error(f"API 호출 실패: {str(e)}")
         return None
 
+st.title('아이디어 선별 및 조언')
+
 # 사용자 입력 구성
 title = st.text_input("발명품의 성질을 나타낼 수 있는 제목을 적어주세요.")
 ideas = st.text_area("발명품을 자세하게 적어주세요.")

@@ -1,7 +1,3 @@
-#4. 프로토타입 제작 및 테스트 단계
-#AI 역할: 사용자가 아이디어를 실제 모델이나 프로토타입으로 전환할 때 기술적 조언을 제공합니다. 또한, 사용자가 프로토타입을 테스트하고 그 결과를 분석할 수 있도록 돕습니다.
-#구현 아이디어: AI를 활용하여 프로토타입 디자인의 가이드라인을 제공하거나, 테스트 데이터를 분석하여 프로토타입의 성능을 평가하는 도구를 개발합니다.
-
 import streamlit as st
 import pathlib
 import google.generativeai as genai
@@ -48,6 +44,9 @@ def try_generate_content(api_key, prompt_parts):
         st.error(f"API 호출 실패: {str(e)}")
         return None
 
+st.title('프로토타입 제작 및 테스트')
+
+
 # 사용자 입력 구성
 title = st.text_input("발명품의 성질을 나타낼 수 있는 제목을 적어주세요.")
 ideas = st.text_area("발명품을 프로토타입을 만들 계획을 자세하게 적어주세요.")
@@ -56,7 +55,7 @@ meterials = st.text_input("프로토타입을 만들 재료는 무엇인가요?"
 # 문제 상황 생성 버튼
 if st.button("인공지능아 제작 조언을 부탁해"):
     # 프롬프트 구성
-    prompt_parts = f"학생이 발명아이디어를 결정했습니다. {title}이라는 이름을 가진 발명품은 {meterials} 로 만들 예정인 {ideas}입니다. 학생의 발명 아이디어를 듣고 제작과 관련된 조언을 해주세요.. "
+    prompt_parts = f"학생이 발명아이디어를 결정했습니다. {title}이라는 이름을 가진 발명품은 {meterials} 로 만들 예정인 {ideas}입니다. 학생의 발명 아이디어를 듣고 제작과 관련된 조언을 해주세요. "
 
     # 첫 번째 API 키로 콘텐츠 생성 시도
     response_text = try_generate_content(gemini_api_key5, prompt_parts)
@@ -97,6 +96,3 @@ if st.button("프로토타입 이미지 생성"):
 
     except Exception as e:
         st.error(f"이미지 생성 중 오류 발생: {e}")
-
-else:
-    st.error("OpenAI API Key를 입력해주세요.")
