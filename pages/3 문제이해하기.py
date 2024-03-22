@@ -16,8 +16,8 @@ with open(secrets_path, "r") as f:
     secrets = toml.load(f)
 
 # secrets.toml 파일에서 API 키 값 가져오기
-gemini_api_key3 = secrets.get("gemini_api_key3")
-gemini_api_key4 = secrets.get("gemini_api_key4")
+gemini_api_key1 = secrets.get("gemini_api_key1")
+gemini_api_key2 = secrets.get("gemini_api_key4")
 
 # 질문 목록
 questions = [
@@ -156,12 +156,12 @@ if st.button("인공지능의 생각은?"):
     ]
 
     # 첫 번째 API 키로 시도
-    response_text = try_generate_content(gemini_api_key3, prompt_parts)
+    response_text = try_generate_content(gemini_api_key1, prompt_parts)
     
     # 첫 번째 API 키 실패 시, 두 번째 API 키로 재시도
-    if response_text is None and gemini_api_key4 is not None:
+    if response_text is None and gemini_api_key2 is not None:
         print("첫 번째 API 호출에 실패하여 두 번째 API 키로 재시도합니다.")
-        response_text = try_generate_content(gemini_api_key4, prompt_parts)
+        response_text = try_generate_content(gemini_api_key2, prompt_parts)
     
     # 결과 출력
     if response_text is not None:
