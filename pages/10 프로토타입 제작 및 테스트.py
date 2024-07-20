@@ -14,10 +14,14 @@ st.markdown(
     .viewerBadge_text__1JaDK {
         display: none;
     }
+    #MainMenu {
+        visibility: hidden;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # 현재 파일의 위치를 기반으로 secrets.toml 파일의 경로를 설정
 secrets_path = pathlib.Path(__file__).parent.parent / ".streamlit/secrets.toml"
