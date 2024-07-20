@@ -3,6 +3,18 @@ import pathlib
 import google.generativeai as genai
 import toml
 
+hide_github_icon = """
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK{ display: none; }
+    #MainMenu{ visibility: hidden; }
+    footer { visibility: hidden; }
+    header { visibility: hidden; }
+    </style>
+"""
+
+st.markdown(hide_github_icon, unsafe_allow_html=True)
 
 # 현재 파일의 위치를 기반으로 secrets.toml 파일의 경로를 설정
 secrets_path = pathlib.Path(__file__).parent.parent / ".streamlit/secrets.toml"
