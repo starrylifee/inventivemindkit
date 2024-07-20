@@ -4,6 +4,19 @@ import google.generativeai as genai
 import toml
 import textwrap
 
+st.markdown(
+    """
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # 세션 상태 초기화 함수
 def reset_session():
     for key in st.session_state.keys():
